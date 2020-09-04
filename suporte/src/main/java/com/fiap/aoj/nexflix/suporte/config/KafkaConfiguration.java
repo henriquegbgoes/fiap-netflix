@@ -53,6 +53,11 @@ public class KafkaConfiguration {
 
         return new DefaultKafkaConsumerFactory<>(config,new StringDeserializer(),
                 new ErrorHandlingDeserializer(new JsonDeserializer<>(ChamadoUsuario.class)));
+        //    {"identifier":"1234","nomeUsuario":"Reinaldo","codigoCliente":"007","messageChamado":"Ta down meu servico po!"}
+
+//        return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(),
+//                new JsonDeserializer<>(ChamadoUsuario.class));
+
     }
 
     @Bean
