@@ -21,12 +21,12 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
 # create topic:
-# docker-compose exec kafka  kafka-topics --create --topic usuario-chamados --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181
+# docker-compose exec kafka  kafka-topics --create --topic usuario-chamado --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181
 # Check topic
-# docker-compose exec kafka  kafka-topics --describe --topic usuario-chamados --zookeeper zookeeper:2181
+# docker-compose exec kafka  kafka-topics --describe --topic usuario-chamado --zookeeper zookeeper:2181
 
 #produce messages
-#docker-compose exec kafka  bash -c "seq 100 | kafka-console-producer --request-required-acks 1 --broker-list zookeeper:9092 --topic usuario-chamados && echo 'Produced 100 messages.'"
+#docker-compose exec kafka  bash -c "seq 100 | kafka-console-producer --request-required-acks 1 --broker-list zookeeper:9092 --topic usuario-chamado && echo 'Produced 100 messages.'"
 
 # consume messages
-# docker-compose exec kafka  kafka-console-consumer --bootstrap-server localhost:9092 --topic item-cadastrado --from-beginning --max-messages 100
+# docker-compose exec kafka  kafka-console-consumer --bootstrap-server localhost:9092 --topic usuario-chamado --from-beginning --max-messages 100
