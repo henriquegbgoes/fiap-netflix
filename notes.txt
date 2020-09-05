@@ -1,0 +1,49 @@
+Kafka:
+ -Desde a raiz do projeto, Run "docker-compose up -d"
+
+
+create Topics:
+
+	docker-compose exec kafka  kafka-topics --create --topic usuario-chamados --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181
+	docker-compose exec kafka  kafka-topics --create --topic usuario-info --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181
+
+	Verificar Topics:
+	docker-compose exec kafka  kafka-topics --describe --topic usuario-chamados --zookeeper zookeeper:2181 
+	docker-compose exec kafka  kafka-topics --describe --topic usuario-info --zookeeper zookeeper:2181 
+
+	Testar topics:
+
+	docker-compose exec kafka  bash -c "seq 10 | kafka-console-producer --request-required-acks 1 --broker-list localhost:9092 --topic usuario-chamados && echo 'Produced 10 messages.'"
+	docker-compose exec kafka  kafka-console-consumer --bootstrap-server localhost:9092 --topic usuario-chamados --from-beginning --max-messages 10
+
+
+	docker-compose exec kafka  bash -c "seq 10 | kafka-console-producer --request-required-acks 1 --broker-list localhost:9092 --topic usuario-info && echo 'Produced 10 messages.'"
+	docker-compose exec kafka  kafka-console-consumer --bootstrap-server localhost:9092 --topic usuario-info --from-beginning --max-messages 10
+
+
+
+consuming messages:
+	docker-compose exec kafka  kafka-console-consumer --bootstrap-server localhost:9092 --topic item-cadastrado --from-beginning --max-messages 100
+
+
+No CLI, executar os commandos, (1 comando em cada  1 janela/aba do CLI)
+	1) docker-compose exec kafka  kafka-console-producer --request-required-acks 1 --broker-list localhost:9092 --topic usuario-chamados
+	2) docker-compose exec kafka  kafka-console-producer --request-required-acks 1 --broker-list localhost:9092 --topic usuario-info 
+
+	3) docker-compose exec kafka  kafka-console-consumer --bootstrap-server localhost:9092 --topic usuario-chamados --from-beginning
+	4) docker-compose exec kafka  kafka-console-consumer --bootstrap-server localhost:9092 --topic usuario-info --from-beginning
+
+MicroServices:
+
+MS usuario:
+ * Rodar o MS e abrir o browser:  http://localhost:8080/kafka/usuario/chamado/{message}
+  - Verificar no IDE e no kafka consumer
+
+
+MS suporte:
+ * Dentro da aba do kafka com o producer  e topic "usuario-chamados", ingressar um json:
+	{"codigoCliente":"1234","messageChamado":"teste"}
+	- Verificar no IDE e no kafka consumer que o listener esta UP (json format ainda nao esta funcionando, pode ser incompatibilidade de dependencias- in review)
+
+* Dentro da aba do kafka com o producer  e topic "usuario-info", ingressar um texto:  "testing"
+   - Verificar que o message e consumido exitosamente
