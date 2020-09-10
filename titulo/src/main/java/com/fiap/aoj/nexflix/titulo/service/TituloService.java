@@ -1,42 +1,67 @@
 package com.fiap.aoj.nexflix.titulo.service;
 
-import java.sql.Timestamp;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.ParameterMode;
-import javax.persistence.PersistenceContext;
-import javax.persistence.StoredProcedureQuery;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fiap.aoj.nexflix.titulo.entity.Titulo;
+import com.fiap.aoj.nexflix.titulo.dto.MarcarTitulo;
+import com.fiap.aoj.nexflix.titulo.dto.TituloAssistido;
+import com.fiap.aoj.nexflix.titulo.dto.Votacao;
+import com.fiap.aoj.nexflix.titulo.repository.DBRepository;
 
 @Service
 public class TituloService {
 
-	@PersistenceContext
-	private EntityManager entityManager;
+	@Autowired
+	private DBRepository dbRepository;
 
-	public List<Titulo> getTitulosPorGenero(String genero) {
-		StoredProcedureQuery query = entityManager.createStoredProcedureQuery("sp_titulo_genero");
-		query.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);
-		query.setParameter(1, genero);
-		query.execute();
-		return query.getResultList();
+	public List<Object> getTitulosPorGenero(String genero) {
+		return dbRepository.callProcedure(genero, "sp_titulo_genero");
 	}
 
-	public List<Titulo> getDetalhesTitulo() {
-		StoredProcedureQuery query = entityManager.createStoredProcedureQuery("sp_titulo_detalhes");
-		query.execute();
-		return query.getResultList();
+	public List<Object> getDetalhesTitulo() {
+		return dbRepository.callProcedure(null, "sp_titulo_detalhes");
+	}
+	
+	public List<Object> getTitulosPorGenero() {
+		return dbRepository.callProcedure(null, "sp_qtdtitulos_genero");
+	}
+	
+	public List<Object> getTitulosAssistidos(TituloAssistido tituloAssistido) {
+		return dbRepository.callProcedure(tituloAssistido, "sp_titulo_assistido");
+	}
+	
+	public List<Object> getTitulosPorPalavraChave(String palavrachave) {
+		return dbRepository.callProcedure(palavrachave, "sp_titulo_palavrachave");
+	}
+	
+	public List<Object> getTitulosMaisAssistidosPorGenero(String genero) {
+		return dbRepository.callProcedure(genero, "sp_maisassistidos_genero");
 	}
 
-	public String getDataHora() {
-		StoredProcedureQuery query = entityManager.createStoredProcedureQuery("sp_dataHora");
-		query.execute();
-		Timestamp outMessage = (Timestamp) query.getSingleResult();
-		return outMessage.toString();
+	public List<Object> getDataHora() {
+		return dbRepository.callProcedure(null, "sp_dataHora");
+	}
+	
+	public String votarTitulo(Votacao votacao) {
+		List<Object> result = dbRepository.callProcedure(votacao, "sp_incluir_titulo_votacao");
+		if(result.contains(Boolean.TRUE))
+			return "Votação incluída com sucesso";
+		else 
+			return "Não foi possível incluir Votação";
+	}
+	
+	public String marcarTituloComoAssistido(MarcarTitulo marcarTitulo) {
+		List<Object> result = dbRepository.callProcedure(marcarTitulo, "sp_incluir_titulo_assistido");
+		if(result.contains(Boolean.TRUE))
+			return "Título marcado como Assistido com sucesso";
+		else 
+			return "Não foi possível marcar o Título como Assistido";
 	}
 
+	public List<Object> getTitulosPorCategoria(String categoria) {
+		return dbRepository.callProcedure(categoria, "sp_maisassistidos_genero");
+	}
+	
 }
