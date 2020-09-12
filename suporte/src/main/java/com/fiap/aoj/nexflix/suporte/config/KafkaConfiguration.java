@@ -11,6 +11,7 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
+import com.fiap.aoj.nexflix.suporte.dto.Suporte;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -69,5 +70,34 @@ public class KafkaConfiguration {
 
         return factory;
     }
+
+
+    //AbrirChamado
+
+    @Bean
+    public ConsumerFactory<String, Suporte> abrirChamadoConsumerFactory(){
+        Map<String,Object> config=new HashMap<>();
+
+        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,"127.0.0.1:9092"); //Kafka running on local and in this port
+        config.put(ConsumerConfig.GROUP_ID_CONFIG,"${spring.kafka.consumer.abrir-chamado.group-id}"); //group_id to manage many topics
+        config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+
+
+        return new DefaultKafkaConsumerFactory<>(config,new StringDeserializer(),
+                new ErrorHandlingDeserializer(new JsonDeserializer<>(Suporte.class)));
+
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory <String, Suporte>abrirChamadoUsuarioKafkaListenerFactory(){
+
+        ConcurrentKafkaListenerContainerFactory <String, Suporte> factory = new ConcurrentKafkaListenerContainerFactory<>();
+
+        factory.setConsumerFactory(abrirChamadoConsumerFactory());
+
+        return factory;
+    }
+
 
 }
