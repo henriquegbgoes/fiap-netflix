@@ -45,4 +45,25 @@ public class Suporte {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
+	//default constructor
+	public Suporte(){
+
+	}
+
+	public Suporte(Integer idUsuario,Integer idTitulo,Integer tipoProblema, String nomeDispositivo ,Integer tipoDispositivo,String descricao){
+		this.idUsuario=idUsuario;
+		this.idTitulo=idTitulo;
+		this.tipoProblema=tipoProblema;
+		this.nomeDispositivo=nomeDispositivo;
+		this.tipoDispositivo=tipoDispositivo;
+		this.descricao=descricao;
+
+		System.out.println("Dados do chamado para suporte:"+ idUsuario + " - "+idTitulo+ " - "+tipoProblema+ " - "+nomeDispositivo+ " - "+tipoDispositivo+ " - "+descricao);
+	}
+
+	@Override
+	public String toString() {
+		return descricao;
+	}
 }

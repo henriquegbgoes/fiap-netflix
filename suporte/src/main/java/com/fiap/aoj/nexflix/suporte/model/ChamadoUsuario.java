@@ -25,8 +25,8 @@ public class ChamadoUsuario {
 
     }
     public ChamadoUsuario(String codigoCliente,String messageChamado){
-        System.out.println("dados:"+ codigoCliente + " - "+messageChamado);
         this.codigoCliente=codigoCliente;
         this.messageChamado=messageChamado;
+        System.out.println("dados:"+ codigoCliente + " - "+messageChamado);
     }
 }

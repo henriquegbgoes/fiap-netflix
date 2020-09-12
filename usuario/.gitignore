@@ -1,7 +1,5 @@
 HELP.md
 usuario/target/
-suporte/target/
-titulo/target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/

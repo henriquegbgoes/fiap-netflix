@@ -13,8 +13,6 @@ import com.fiap.aoj.nexflix.suporte.service.SuporteService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.beans.factory.annotation.Value;
 
 @RestController
 @RequestMapping("/suporte") 
@@ -29,17 +27,9 @@ public class SuporteController {
 	
 	@Autowired
 	private SuporteService service;
-	private KafkaTemplate<String, Suporte> kafkaTemplate;
 
-
-	//Adding kafka
-	@Value("${abrir.chamado.topic}")
-	private String TOPIC;
 
 	@PostMapping("/abrirChamado")
 	@ApiOperation(value = "Votar em um Título")
-	public String votarTitulo(@RequestBody Suporte suporte) {
-		kafkaTemplate.send(TOPIC,suporte);
-		return service.abrirChamado(suporte);
-	}
+	public String votarTitulo(@RequestBody Suporte suporte) {return service.abrirChamado(suporte);}
 }

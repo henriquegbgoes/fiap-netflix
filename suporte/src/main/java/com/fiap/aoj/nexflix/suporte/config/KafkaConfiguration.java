@@ -78,12 +78,10 @@ public class KafkaConfiguration {
     public ConsumerFactory<String, Suporte> abrirChamadoConsumerFactory(){
         Map<String,Object> config=new HashMap<>();
 
-        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,"127.0.0.1:9092"); //Kafka running on local and in this port
-        config.put(ConsumerConfig.GROUP_ID_CONFIG,"${spring.kafka.consumer.abrir-chamado.group-id}"); //group_id to manage many topics
+        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,"127.0.0.1:9092");
+        config.put(ConsumerConfig.GROUP_ID_CONFIG,"${spring.kafka.consumer.abrir-chamado.group-id}");
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-
-
         return new DefaultKafkaConsumerFactory<>(config,new StringDeserializer(),
                 new ErrorHandlingDeserializer(new JsonDeserializer<>(Suporte.class)));
 
