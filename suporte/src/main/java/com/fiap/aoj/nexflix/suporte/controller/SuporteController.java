@@ -23,7 +23,7 @@ public class SuporteController {
 	private SuporteService service;
 	
 	@PostMapping("/abrirChamado")
-	@ApiOperation(value = "Votar em um Título")
+	@ApiOperation(value = "Abrir um chamado técnico")
 	public String votarTitulo(@RequestBody Suporte suporte) {
 		return service.abrirChamado(suporte);
 	}
