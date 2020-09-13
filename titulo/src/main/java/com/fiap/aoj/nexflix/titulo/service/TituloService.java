@@ -55,9 +55,9 @@ public class TituloService {
 	public String marcarTituloComoAssistido(MarcarTitulo marcarTitulo) {
 		List<Object> result = dbRepository.callProcedure(marcarTitulo, "sp_incluir_titulo_assistido");
 		if(result.contains(Boolean.TRUE))
-			return "Título marcado como Assistido com sucesso";
+			return marcarTitulo.getAssistidoVerNoFuturo() == 1 ? "Título marcado como Assistido com sucesso" : "Título marcado para ver no futuro";
 		else 
-			return "Não foi possível marcar o Título como Assistido";
+			return marcarTitulo.getAssistidoVerNoFuturo() == 1 ? "Não foi possível marcar o Título como Assistido" : "Não foi possível marcar para ver no futuro";
 	}
 
 	public List<Object> getTitulosPorCategoria(String categoria) {
