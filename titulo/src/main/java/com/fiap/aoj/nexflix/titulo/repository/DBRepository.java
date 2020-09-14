@@ -9,7 +9,6 @@ import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -17,18 +16,6 @@ public class DBRepository {
 	
 	@PersistenceContext
 	private EntityManager entityManager;
-	
-	@Value("${spring.datasource.url}")
-	private String URL;
-
-	@Value("${spring.datasource.username}")
-	private String USERNAME;
-	
-	@Value("${spring.datasource.password}")
-	private String PASSWORD;
-	
-	@Value("${spring.datasource.driverClassName}")
-	private String DRIVERCLASSNAME;
 	
 	@SuppressWarnings("unchecked")
 	public List<Object> callProcedure(Object object, String procedureName) {
