@@ -3,6 +3,7 @@ package com.fiap.aoj.nexflix.titulo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/titulos") 
 @Api(value = "API REST Titulos Netflix")
 @CrossOrigin(origins = "*")
+@RefreshScope
 public class TituloController {
 	
 	@Autowired

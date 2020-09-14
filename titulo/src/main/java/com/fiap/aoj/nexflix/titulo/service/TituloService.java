@@ -1,8 +1,10 @@
 package com.fiap.aoj.nexflix.titulo.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.fiap.aoj.nexflix.titulo.dto.MarcarTitulo;
@@ -13,6 +15,9 @@ import com.fiap.aoj.nexflix.titulo.repository.DBRepository;
 @Service
 public class TituloService {
 
+	@Value("${sensibilizaInsert}")
+	private boolean SENSIBILIZA_INSERT;
+	
 	@Autowired
 	private DBRepository dbRepository;
 
@@ -45,7 +50,13 @@ public class TituloService {
 	}
 	
 	public String votarTitulo(Votacao votacao) {
-		List<Object> result = dbRepository.callProcedure(votacao, "sp_incluir_titulo_votacao");
+		
+		List<Object> result;
+		if(!SENSIBILIZA_INSERT) 
+			result = Arrays.asList(Boolean.TRUE);
+		else 
+			result = dbRepository.callProcedure(votacao, "sp_incluir_titulo_votacao");
+		
 		if(result.contains(Boolean.TRUE))
 			return "Votação incluída com sucesso";
 		else 
