@@ -1,4 +1,4 @@
-package com.example.eurekaserver;
+package com.fiap.aoj.netflix.eurekaserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
