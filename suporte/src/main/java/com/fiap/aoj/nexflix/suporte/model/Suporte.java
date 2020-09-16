@@ -1,4 +1,4 @@
-package com.fiap.aoj.nexflix.suporte.dto;
+package com.fiap.aoj.nexflix.suporte.model;
 
 public class Suporte {
 

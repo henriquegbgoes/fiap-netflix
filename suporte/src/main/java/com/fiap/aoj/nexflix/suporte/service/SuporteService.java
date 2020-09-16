@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.fiap.aoj.nexflix.suporte.dto.Suporte;
+import com.fiap.aoj.nexflix.suporte.model.Suporte;
 import com.fiap.aoj.nexflix.suporte.repository.DBRepository;
 
 @Service
