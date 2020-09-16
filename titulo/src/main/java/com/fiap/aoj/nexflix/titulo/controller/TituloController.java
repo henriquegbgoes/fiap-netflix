@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fiap.aoj.nexflix.titulo.dto.MarcarTitulo;
+import com.fiap.aoj.nexflix.titulo.dto.Suporte;
 import com.fiap.aoj.nexflix.titulo.dto.TituloAssistido;
 import com.fiap.aoj.nexflix.titulo.dto.Votacao;
 import com.fiap.aoj.nexflix.titulo.service.TituloService;
@@ -95,5 +96,10 @@ public class TituloController {
 		return service.marcarTituloComoAssistido(marcarTitulo);
 	}
 	
+	@PostMapping("/abrirChamado")
+	@ApiOperation(value = "Abrir um chamado técnico")
+	public String votarTitulo(@RequestBody Suporte suporte) {
+		return service.abrirChamadoTitulo(suporte);
+	}
 	
 }

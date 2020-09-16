@@ -5,18 +5,26 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.messaging.Source;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import com.fiap.aoj.nexflix.titulo.dto.MarcarTitulo;
+import com.fiap.aoj.nexflix.titulo.dto.Suporte;
 import com.fiap.aoj.nexflix.titulo.dto.TituloAssistido;
 import com.fiap.aoj.nexflix.titulo.dto.Votacao;
 import com.fiap.aoj.nexflix.titulo.repository.DBRepository;
 
 @Service
+@EnableBinding(Source.class)
 public class TituloService {
 
 	@Value("${sensibilizaInsert}")
 	private boolean SENSIBILIZA_INSERT;
+	
+	@Autowired
+	private Source source;
 	
 	@Autowired
 	private DBRepository dbRepository;
@@ -47,6 +55,11 @@ public class TituloService {
 
 	public List<Object> getDataHora() {
 		return dbRepository.callProcedure(null, "sp_dataHora");
+	}
+	
+	public String abrirChamadoTitulo(Suporte suporte) {
+		source.output().send(MessageBuilder.withPayload(suporte).build());
+		return "Chamado enviado";
 	}
 	
 	public String votarTitulo(Votacao votacao) {
