@@ -59,7 +59,7 @@ public class TituloService {
 	
 	public String abrirChamadoTitulo(Suporte suporte) {
 		source.output().send(MessageBuilder.withPayload(suporte).build());
-		return "Chamado enviado";
+		return "Chamado enviado!";
 	}
 	
 	public String votarTitulo(Votacao votacao) {
